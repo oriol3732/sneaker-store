@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SneakerStore - Tu tienda de zapatillas</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <div class="logo">
+                    <h1>👟 SneakerStore</h1>
+                    <p>Tu tienda online de zapatillas premium</p>
+                </div>
+                <div class="header-right">
+                    <div class="search-box">
+                        <input type="text" id="searchInput" placeholder="Buscar zapatillas...">
+                        <button id="searchBtn" class="btn-search">🔍</button>
+                    </div>
+                    <button id="cartBtn" class="btn-cart">
+                        🛒 Carrito (<span id="cartCount">0</span>)
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Filters -->
+        <section class="filters">
+            <div class="filter-group">
+                <label for="brandFilter">Marca:</label>
+                <select id="brandFilter">
+                    <option value="">Todas</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label for="priceFilter">Precio máximo:</label>
+                <input type="range" id="priceFilter" min="50" max="500" value="500">
+                <span id="priceValue">$500</span>
+            </div>
+            <div class="filter-group">
+                <label for="colorFilter">Color:</label>
+                <select id="colorFilter">
+                    <option value="">Todos</option>
+                </select>
+            </div>
+            <button id="resetFilters" class="btn-reset">Limpiar filtros</button>
+        </section>
+
+        <!-- Products Grid -->
+        <section class="products">
+            <div id="productsGrid" class="products-grid">
+                <!-- Los productos se cargarán aquí -->
+            </div>
+        </section>
+
+        <!-- Cart Modal -->
+        <div id="cartModal" class="modal hidden">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h2>🛒 Tu Carrito</h2>
+                <div id="cartItems" class="cart-items">
+                    <!-- Los items del carrito se mostrarán aquí -->
+                </div>
+                <div class="cart-summary">
+                    <h3>Total: $<span id="cartTotal">0</span></h3>
+                    <button id="checkoutBtn" class="btn-checkout">Proceder al pago</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Product Detail Modal -->
+        <div id="productModal" class="modal hidden">
+            <div class="modal-content product-detail">
+                <span class="close">&times;</span>
+                <div id="productDetail" class="product-detail-content">
+                    <!-- Detalles del producto -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="data.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
