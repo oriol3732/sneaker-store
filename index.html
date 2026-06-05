@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>golden bros - Tu tienda de zapatillas</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles.css?v=4">
 </head>
 <body>
     <div class="container">
@@ -15,7 +15,7 @@
                     <div class="logo-copy">
                         <span class="logo-eyebrow">Golden Bros</span>
                         <h1>golden bros</h1>
-                        <p>Curaduria premium de zapatillas con presencia nocturna y acabado dorado.</p>
+                        <p>Selección de zapatillas de calidad, con un estilo chic y contemporaneo.</p>
                     </div>
                 </div>
                 <div class="header-right">
@@ -32,26 +32,26 @@
 
         <section class="hero">
             <div class="hero-copy">
-                <span class="section-kicker">The Golden Edit</span>
-                <h2>Una sneaker store con lenguaje de showroom, no de catalogo genérico.</h2>
+                    <span class="section-kicker">The Chic Edit</span>
+                    <h2>Una sneaker store con lenguaje de showroom.</h2>
                 <p>
-                    Seleccion de pares icónicos, tonos profundos y detalles dorados para una experiencia
-                    de compra que se sienta mas exclusiva desde el primer scroll.
+                    Selección de pares icónicos, acabados cuidados y una estética chic para una experiencia
+                    de compra que se sienta más exclusiva desde el primer scroll.
                 </p>
                 <div class="hero-actions">
-                    <a class="btn-primary" href="#productsSection">Explorar coleccion</a>
+                    <a class="btn-primary" href="#productsSection">Explorar colección</a>
                     <button class="btn-secondary" type="button" id="heroFilterBtn">Ver filtros</button>
                 </div>
             </div>
             <div class="hero-showcase" aria-label="Brand direction">
                 <div class="showcase-frame showcase-main">
-                    <span class="showcase-label">Signature Atmosphere</span>
-                    <h3>Black lacquer, warm gold, and sport silhouettes with luxury posture.</h3>
+                    <span class="showcase-label">Estilo protagonista</span>
+                    <h3>Texturas oscuras, contraste suave y siluetas deportivas con presencia.</h3>
                 </div>
                 <div class="showcase-grid">
                     <article class="showcase-frame">
                         <span class="showcase-stat" id="productCount">0</span>
-                        <p>Pares curados en la coleccion</p>
+                        <p>Pares seleccionados en la colección</p>
                     </article>
                     <article class="showcase-frame">
                         <span class="showcase-stat" id="brandCount">0</span>
@@ -59,67 +59,67 @@
                     </article>
                     <article class="showcase-frame">
                         <span class="showcase-stat" id="featuredCount">0</span>
-                        <p>Modelos premium sobre $150</p>
+                        <p>Modelos destacados sobre $150</p>
                     </article>
                 </div>
             </div>
         </section>
 
-        <section class="curation-strip" aria-label="Brand values">
-            <article class="curation-card">
-                <span class="curation-index">01</span>
-                <h3>Visual de boutique</h3>
-                <p>Fondos oscuros, reflejos suaves y tipografia con peso editorial para una identidad mas elevada.</p>
-            </article>
-            <article class="curation-card">
-                <span class="curation-index">02</span>
-                <h3>Selección curada</h3>
-                <p>Las tarjetas destacan silueta, marca, precio y detalles clave sin ruido visual innecesario.</p>
-            </article>
-            <article class="curation-card">
-                <span class="curation-index">03</span>
-                <h3>Compra directa</h3>
-                <p>Busqueda, filtros, carrito y detalle siguen intactos, pero con una presentación más premium.</p>
-            </article>
-        </section>
-
-        <section class="filters">
-            <div class="filter-group">
-                <label for="brandFilter">Marca:</label>
-                <select id="brandFilter">
-                    <option value="">Todas</option>
-                </select>
-            </div>
-            <div class="filter-group">
-                <label for="priceFilter">Precio máximo:</label>
-                <input type="range" id="priceFilter" min="50" max="500" value="500">
-                <span id="priceValue">$500</span>
-            </div>
-            <div class="filter-group">
-                <label for="colorFilter">Color:</label>
-                <select id="colorFilter">
-                    <option value="">Todos</option>
-                </select>
-            </div>
-            <button id="resetFilters" class="btn-reset">Limpiar filtros</button>
-        </section>
-
-        <section class="products" id="productsSection">
-            <div class="section-heading">
-                <div>
-                    <span class="section-kicker">Featured Arrivals</span>
-                    <h2>La coleccion de golden bros</h2>
+        <section class="catalog-layout" aria-label="Catálogo de productos">
+            <aside class="filters">
+                <div class="filter-group">
+                    <label for="brandFilter">Marca:</label>
+                    <select id="brandFilter">
+                        <option value="">Todas</option>
+                    </select>
                 </div>
-                <p id="resultsSummary">Seleccion premium lista para explorar.</p>
-            </div>
-            <div id="productsGrid" class="products-grid">
+                <div class="filter-group">
+                    <label for="priceFilter">Precio máximo:</label>
+                    <input type="range" id="priceFilter" min="50" max="500" value="500">
+                    <span id="priceValue">$500</span>
+                </div>
+                <div class="filter-group">
+                    <label for="colorFilter">Tono:</label>
+                    <select id="colorFilter">
+                        <option value="">Todos los tonos</option>
+                    </select>
+                </div>
+                <button id="resetFilters" class="btn-reset">Limpiar filtros</button>
+            </aside>
+
+            <div class="catalog-main">
+                <section class="products" id="productsSection">
+                    <div class="section-heading">
+                        <div class="results-heading-copy">
+                            <span class="section-kicker">Novedades destacadas</span>
+                            <h2>La colección de golden bros</h2>
+                            <p id="resultsSummary">Selección lista para explorar.</p>
+                        </div>
+                        <div class="results-controls">
+                            <label class="page-size-control" for="pageSizeSelect">
+                                <span>Por página</span>
+                                <select id="pageSizeSelect">
+                                    <option value="8">8</option>
+                                    <option value="12" selected>12</option>
+                                    <option value="24">24</option>
+                                </select>
+                            </label>
+                            <div class="pagination-controls" aria-label="Paginación">
+                                <button id="prevPage" class="btn-pagination" type="button">Anterior</button>
+                                <span id="pageInfo" class="page-info">1 / 1</span>
+                                <button id="nextPage" class="btn-pagination" type="button">Siguiente</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="productsGrid" class="products-grid"></div>
+                </section>
             </div>
         </section>
 
         <div id="cartModal" class="modal hidden">
             <div class="modal-content">
                 <span class="close">&times;</span>
-                <h2>🛒 Tu Carrito</h2>
+                <h2>🛒 Tu carrito</h2>
                 <div id="cartItems" class="cart-items">
                     <!-- Los items del carrito se mostrarán aquí -->
                 </div>
@@ -140,11 +140,29 @@
 
         <footer class="footer">
             <p>golden bros</p>
-            <span>Luxury sneaker curation for after-dark retail energy.</span>
+            <span>Selección de sneakers con una estética refinada.</span>
         </footer>
+
+        <section class="curation-strip" aria-label="Brand values">
+            <article class="curation-card">
+                <span class="curation-index">01</span>
+                <h3>Estilo boutique</h3>
+                <p>Fondos oscuros, reflejos suaves y tipografía con peso editorial para una identidad más elevada.</p>
+            </article>
+            <article class="curation-card">
+                <span class="curation-index">02</span>
+                <h3>Selección cuidada</h3>
+                <p>Cada ficha de producto muestra la silueta, la marca, el precio y los detalles clave de forma clara y sin recargar la vista.</p>
+            </article>
+            <article class="curation-card">
+                <span class="curation-index">03</span>
+                <h3>Compra fácil</h3>
+                <p>Búsqueda, filtros, carrito y detalle siguen intactos, pero con una presentación más cuidada.</p>
+            </article>
+        </section>
     </div>
 
-    <script src="data.js"></script>
-    <script src="app.js"></script>
+    <script src="data.js?v=4"></script>
+    <script src="app.js?v=4"></script>
 </body>
 </html>
