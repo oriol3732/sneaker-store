@@ -405,20 +405,34 @@ body::before {
     font-size: 0.94rem;
 }
 
+.catalog-layout {
+    display: grid;
+    grid-template-columns: 320px minmax(0, 1fr);
+    gap: 24px;
+    align-items: start;
+    margin-bottom: 30px;
+}
+
+.catalog-main {
+    min-width: 0;
+}
+
 .filters {
     gap: 20px;
-    flex-wrap: wrap;
-    align-items: end;
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
     padding: 22px 24px;
     border-radius: var(--radius-xl);
-    margin-bottom: 28px;
+    margin-bottom: 0;
+    position: sticky;
+    top: 24px;
+    align-self: start;
 }
 
 .filter-group {
     display: grid;
     gap: 8px;
-    min-width: 180px;
-    flex: 1;
 }
 
 .filter-group label {
@@ -468,9 +482,71 @@ body::before {
 
 .section-heading {
     justify-content: space-between;
-    align-items: end;
+    align-items: flex-start;
     gap: 18px;
     margin-bottom: 18px;
+}
+
+.results-heading-copy {
+    display: grid;
+    gap: 8px;
+}
+
+.results-heading-copy p {
+    max-width: 560px;
+    text-align: left;
+}
+
+.results-controls {
+    display: grid;
+    gap: 12px;
+    justify-items: end;
+    min-width: 260px;
+}
+
+.page-size-control {
+    display: grid;
+    gap: 8px;
+    justify-items: end;
+    font-size: 0.84rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.page-size-control select {
+    min-width: 110px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 14px;
+    padding: 11px 14px;
+    background: rgba(255, 255, 255, 0.04);
+    color: var(--text);
+}
+
+.pagination-controls {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.btn-pagination {
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(255, 255, 255, 0.04);
+    color: var(--text);
+    padding: 11px 16px;
+    border-radius: 999px;
+    cursor: pointer;
+}
+
+.btn-pagination:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+}
+
+.page-info {
+    min-width: 64px;
+    text-align: center;
+    color: var(--muted);
+    font-size: 0.92rem;
 }
 
 .section-heading h2 {
@@ -480,8 +556,7 @@ body::before {
 }
 
 .section-heading p {
-    max-width: 360px;
-    text-align: right;
+    max-width: 460px;
     line-height: 1.6;
 }
 
@@ -489,13 +564,15 @@ body::before {
     display: grid;
     gap: 22px;
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    align-items: stretch;
 }
 
 .product-card {
     border-radius: 24px;
     overflow: hidden;
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-rows: 200px 1fr;
+    height: 100%;
 }
 
 .product-card:hover {
@@ -504,7 +581,34 @@ body::before {
 }
 
 .product-image {
+    position: relative;
     min-height: 200px;
+    overflow: hidden;
+    background:
+        radial-gradient(circle at 50% 20%, rgba(240, 216, 147, 0.24), transparent 30%),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(6, 6, 6, 0.9)),
+        linear-gradient(135deg, rgba(214, 179, 106, 0.1), transparent 55%);
+    border-bottom: 1px solid rgba(214, 179, 106, 0.12);
+}
+
+.product-photo,
+.product-detail-photo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    opacity: 0;
+    transition: opacity 0.25s ease;
+}
+
+.product-card.has-image .product-photo,
+.product-detail-image.has-image .product-detail-photo {
+    opacity: 1;
+}
+
+.product-image-fallback {
+    position: absolute;
+    inset: 0;
     display: grid;
     place-items: center;
     font-family: 'Cormorant Garamond', serif;
@@ -515,21 +619,38 @@ body::before {
         radial-gradient(circle at 50% 20%, rgba(240, 216, 147, 0.24), transparent 30%),
         linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(6, 6, 6, 0.9)),
         linear-gradient(135deg, rgba(214, 179, 106, 0.1), transparent 55%);
-    border-bottom: 1px solid rgba(214, 179, 106, 0.12);
+    opacity: 1;
+    transition: opacity 0.25s ease;
+}
+
+.product-card.has-image .product-image-fallback,
+.product-detail-image.has-image .product-image-fallback {
+    opacity: 0;
 }
 
 .product-info {
     display: flex;
     flex-direction: column;
-    flex: 1;
     gap: 10px;
     padding: 22px;
+    min-height: 0;
 }
 
 .product-name {
     font-size: 1.55rem;
     line-height: 1.05;
     color: var(--text);
+    min-height: 3.2em;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+}
+
+.product-color,
+.product-size,
+.product-rating {
+    min-height: 1.2em;
 }
 
 .product-price {
@@ -545,7 +666,12 @@ body::before {
 .btn-add-cart,
 .btn-view-details {
     width: 100%;
-    margin-top: 6px;
+}
+
+.product-actions {
+    margin-top: auto;
+    display: grid;
+    gap: 10px;
 }
 
 .btn-view-details {
@@ -694,18 +820,20 @@ body::before {
 }
 
 .product-detail-image {
+    position: relative;
     min-height: 360px;
     border-radius: 26px;
-    display: grid;
-    place-items: center;
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 4.8rem;
-    color: var(--gold-bright);
+    overflow: hidden;
     background:
         radial-gradient(circle at 50% 20%, rgba(240, 216, 147, 0.24), transparent 30%),
         linear-gradient(180deg, rgba(255, 255, 255, 0.05), rgba(7, 7, 7, 0.92)),
         linear-gradient(135deg, rgba(214, 179, 106, 0.12), transparent 52%);
     border: 1px solid rgba(214, 179, 106, 0.2);
+}
+
+.product-detail-image .product-image-fallback {
+    border-radius: 26px;
+    font-size: 4.8rem;
 }
 
 .product-detail-brand {
@@ -783,6 +911,15 @@ body::before {
     .hero-showcase {
         min-height: unset;
     }
+
+    .catalog-layout {
+        grid-template-columns: 1fr;
+        gap: 18px;
+    }
+
+    .filters {
+        position: static;
+    }
 }
 
 @media (max-width: 860px) {
@@ -829,6 +966,35 @@ body::before {
         text-align: left;
     }
 
+    .section-heading {
+        align-items: stretch;
+    }
+
+    .results-controls {
+        justify-items: start;
+        min-width: 0;
+        width: 100%;
+    }
+
+    .page-size-control {
+        justify-items: start;
+        width: 100%;
+    }
+
+    .page-size-control select,
+    .pagination-controls {
+        width: 100%;
+    }
+
+    .pagination-controls {
+        justify-content: stretch;
+        flex-wrap: wrap;
+    }
+
+    .btn-pagination {
+        flex: 1 1 120px;
+    }
+
     .product-detail-content {
         grid-template-columns: 1fr;
     }
@@ -851,6 +1017,15 @@ body::before {
         padding-right: 18px;
     }
 
+    .catalog-layout {
+        gap: 16px;
+    }
+
+    .filters {
+        padding: 18px;
+        gap: 16px;
+    }
+
     .hero-copy,
     .showcase-frame,
     .curation-card,
@@ -862,8 +1037,30 @@ body::before {
         grid-template-columns: 1fr;
     }
 
+    .product-card {
+        grid-template-rows: 190px 1fr;
+    }
+
     .product-image,
     .product-detail-image {
-        min-height: 220px;
+        min-height: 190px;
+    }
+
+    .results-controls,
+    .page-size-control,
+    .page-size-control select,
+    .pagination-controls,
+    .btn-pagination {
+        width: 100%;
+    }
+
+    .pagination-controls {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .page-info {
+        min-width: 0;
+        padding: 2px 0;
     }
 }
