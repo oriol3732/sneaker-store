@@ -1,10 +1,10 @@
 const sneakers = [
-    { id: 1, brand: "Nike", name: "Air Jordan 1 Retro High OG", color: "Negro/Rojo", size: "38-46", price: 95.00, rating: 4.9, searchQuery: "air jordan 1 retro high og" },
-    { id: 2, brand: "Nike", name: "Nike Air Force 1 Classic", color: "Blanco", size: "35-47", price: 54.99, rating: 4.8, searchQuery: "nike air force 1" },
-    { id: 3, brand: "Nike", name: "Nike Air Max 90", color: "Gris/Blanco", size: "35-47", price: 75.00, rating: 4.7, searchQuery: "nike air max 90" },
+    { id: 1, brand: "Nike", name: "Air Jordan 1 Retro High OG", color: "Negro/Rojo", size: "38-46", price: 95.00, rating: 4.9, searchQuery: "air jordan 1 retro high og", image: "assets/products/real-sport-bball-01.png" },
+    { id: 2, brand: "Nike", name: "Nike Air Force 1 Classic", color: "Blanco", size: "35-47", price: 54.99, rating: 4.8, searchQuery: "nike air force 1", image: "assets/products/real-lowtop-01.png" },
+    { id: 3, brand: "Nike", name: "Nike Air Max 90", color: "Gris/Blanco", size: "35-47", price: 75.00, rating: 4.7, searchQuery: "nike air max 90", image: "assets/products/real-lowtop-02.png" },
     { id: 4, brand: "Nike", name: "Nike Cortez Classic", color: "Rojo/Blanco", size: "36-46", price: 49.99, rating: 4.6, searchQuery: "nike cortez" },
     { id: 5, brand: "Nike", name: "Nike Blazer Mid Vintage", color: "Naranja", size: "36-46", price: 59.99, rating: 4.5, searchQuery: "nike blazer" },
-    { id: 6, brand: "Nike", name: "Nike Dunk High", color: "Azul marino", size: "35-47", price: 70.00, rating: 4.8, searchQuery: "nike dunk high" },
+    { id: 6, brand: "Nike", name: "Nike Dunk High", color: "Azul marino", size: "35-47", price: 70.00, rating: 4.8, searchQuery: "nike dunk high", image: "assets/products/real-sport-bball-02.png" },
     { id: 7, brand: "Nike", name: "Nike React Infinity Run", color: "Blanco", size: "36-47", price: 85.00, rating: 4.7, searchQuery: "nike react infinity" },
     { id: 8, brand: "Nike", name: "Nike Air Vapormax", color: "Negro", size: "35-47", price: 95.00, rating: 4.6, searchQuery: "nike air vapormax" },
     { id: 9, brand: "Nike", name: "Nike PG 5", color: "Blanco/Azul", size: "40-47", price: 75.00, rating: 4.7, searchQuery: "nike pg 5" },
@@ -223,26 +223,78 @@ const sneakers = [
     { id: 222, brand: "Adidas", name: "Adidas Alphabounce Beyond", color: "Negro", size: "35-47", price: 65.00, rating: 4.5, searchQuery: "adidas alphabounce beyond" }
 ];
 
+const colorToneGroups = [
+    { label: "Neutros", keywords: ["blanco", "gris", "beige", "crema", "ivory", "off white", "taupe"] },
+    { label: "Oscuros", keywords: ["negro", "charcoal", "grafito", "navy", "marino", "oscuro"] },
+    { label: "Tierra", keywords: ["marron", "cafe", "tan", "sand", "sesame", "khaki", "camel", "brown"] },
+    { label: "Azules", keywords: ["azul", "blue"] },
+    { label: "Rojos", keywords: ["rojo", "red", "burgundy", "granate"] },
+    { label: "Verdes", keywords: ["verde", "green", "olive"] },
+    { label: "Amarillos", keywords: ["amarillo", "yellow", "gold"] },
+    { label: "Rosas", keywords: ["rosa", "pink"] },
+    { label: "Naranjas", keywords: ["naranja", "orange"] }
+];
+
 function getSneakers() { return sneakers; }
 function searchSneakers(query) { return sneakers.filter(s => s.name.toLowerCase().includes(query.toLowerCase()) || s.brand.toLowerCase().includes(query.toLowerCase())); }
 function filterByBrand(brand) { if (!brand) return sneakers; return sneakers.filter(s => s.brand === brand); }
 function filterByPrice(maxPrice) { return sneakers.filter(s => s.price <= maxPrice); }
-function filterByColor(color) { if (!color) return sneakers; return sneakers.filter(s => s.color.toLowerCase().includes(color.toLowerCase())); }
-function getBrands() { const brands = [...new Set(sneakers.map(s => s.brand))]; return brands.sort(); }
-function getColors() { const colors = new Set(); sneakers.forEach(s => { s.color.split('/').forEach(c => colors.add(c.trim())); }); return Array.from(colors).sort(); }
+function normalizeColorText(value) {
+    return String(value || "")
+        .toLowerCase()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "");
+}
 
-// Function to get sneaker image from Unsplash API
-async function getSneakerImage(searchQuery) {
-    try {
-        const response = await fetch(`https://api.unsplash.com/search/photos?query=${encodeURIComponent(searchQuery)}&client_id=o2LfPR_aLEPB1cPPxiBpGBBxn2QwzWJdbXPjPw_JL4E&per_page=1`);
-        if (!response.ok) throw new Error('API Error');
-        const data = await response.json();
-        if (data.results && data.results.length > 0) {
-            return data.results[0].urls.regular;
+function getColorToneLabels(color) {
+    const normalized = normalizeColorText(color);
+    const labels = new Set();
+
+    colorToneGroups.forEach((group) => {
+        if (group.keywords.some((keyword) => normalized.includes(keyword))) {
+            labels.add(group.label);
         }
-        return null;
-    } catch (error) {
-        console.error('Error fetching image:', error);
+    });
+
+    if (labels.size === 0) {
+        labels.add("Neutros");
+    }
+
+    return Array.from(labels);
+}
+
+function filterByColor(color) {
+    if (!color) return sneakers;
+    return sneakers.filter((sneaker) => getColorToneLabels(sneaker.color).includes(color));
+}
+function getBrands() { const brands = [...new Set(sneakers.map(s => s.brand))]; return brands.sort(); }
+function getColors() {
+    const colors = new Set();
+
+    sneakers.forEach((sneaker) => {
+        getColorToneLabels(sneaker.color).forEach((label) => colors.add(label));
+    });
+
+    return colorToneGroups.map((group) => group.label).filter((label) => colors.has(label));
+}
+
+function getSneakerImage(searchQuery) {
+    const product = sneakers.find((entry) =>
+        entry.searchQuery === searchQuery ||
+        entry.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        entry.brand.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+
+    if (!product) {
         return null;
     }
+
+    const slug = product.name
+        .toLowerCase()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .replace(/[^a-z0-9]+/g, "-")
+        .replace(/^-+|-+$/g, "");
+
+    return `assets/products/${String(product.id).padStart(3, "0")}-${slug}.svg`;
 }
